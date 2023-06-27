@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ChatTester"
+version = "0.0.1"
+description = "A novel ChatGPT-based unit test generation approach."
+authors = [
+    "XiaHan <jstzwj@aliyun.com>",
+    "FrostMiKu <i@frostmiku.com>",
+]
+maintainers = [
+    "XiaHan <jstzwj@aliyun.com>",
+    "FrostMiKu <i@frostmiku.com>",
+]
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+]
+dependencies = [
+    "numpy", "pydantic", "requests", "transformers", "openai", "langchain",
+    "rich>=10.0.0", "shortuuid", "torch", "tenacity>=8.2.2",
+]
+
+[project.optional-dependencies]
+dev = ["black==23.3.0", "pylint==2.8.2"]
+
+
+[project.urls]
+"Homepage" = "https://github.com/vtuber-plan/vtbaudio"
+"Bug Tracker" = "https://github.com/vtuber-plan/vtbaudio/issues"
+
+[tool.setuptools.packages.find]
+exclude = ["assets*", "benchmark*", "docs", "dist*", "playground*", "scripts*", "tests*"]
+
+[tool.wheel]
+exclude = ["assets*", "benchmark*", "docs", "dist*", "playground*", "scripts*", "tests*"]
