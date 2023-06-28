@@ -1,3 +1,8 @@
+# Copyright 2023 by XiaHan. All rights reserved.
+# This file is part of the ChatTester,
+# and is released under the "MIT License Agreement". Please see the LICENSE
+# file that should have been included as part of this package.
+
 import javalang as jl
 
 def get_method_start_end(tree, method_node):
@@ -25,7 +30,10 @@ def get_method_text(codelines, startpos, endpos, startline, endline, last_endlin
         # 1. check for and fetch annotations
         if last_endline_index is not None:
             for line in codelines[(last_endline_index + 1):(startline_index)]:
-                if "@" in line: 
+                if "@" in line:
+                    idx = line.find("@")
+                    if line[:idx].strip() != "":
+                        continue
                     startline_index = startline_index - 1
         meth_text = "<ST>".join(codelines[startline_index:endline_index])
         meth_text = meth_text[:meth_text.rfind("}") + 1] 
@@ -37,10 +45,16 @@ def get_method_text(codelines, startpos, endpos, startline, endline, last_endlin
             brace_diff = abs(meth_text.count("}") - meth_text.count("{"))
 
             for _ in range(brace_diff):
-                meth_text  = meth_text[:meth_text.rfind("}")]    
-                meth_text  = meth_text[:meth_text.rfind("}") + 1]     
+                meth_text  = meth_text[:meth_text.rfind("}")]
+                meth_text  = meth_text[:meth_text.rfind("}") + 1]
+        
+        # if "/*" in meth_text and "}" in meth_text:
+        #     if meth_text.rfind("}") < meth_text.rfind("/*"):
+        #         meth_text  = meth_text[:meth_text.rfind("/*")]
+        if "/*" in meth_text and "}" in meth_text:
+            meth_text  = meth_text[:meth_text.rfind("/*")]
 
-        meth_lines = meth_text.split("<ST>")  
+        meth_lines = meth_text.split("<ST>")
         meth_text  = "".join(meth_lines)                   
         last_endline_index = startline_index + (len(meth_lines) - 1) 
 
