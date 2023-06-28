@@ -2,6 +2,7 @@
 # This file is part of the ChatTester,
 # and is released under the "MIT License Agreement". Please see the LICENSE
 # file that should have been included as part of this package.
+
 import javalang
 from pydantic import BaseModel, Field
 from typing import List, Optional
@@ -86,7 +87,7 @@ class FieldInfo(BaseModel):
         return FieldInfo(
             source=source,
             range=LineRange(start_line=node.position.line, end_line=node.position.line + 1),
-            text=codelines[node.position.line],
+            text=codelines[node.position.line].strip(),
             name=sub_node.name,
         )
 
